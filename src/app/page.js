@@ -1,6 +1,9 @@
-import Image from "next/image";
-import { HiH1 } from "react-icons/hi2";
+import Hero from "@/components/home/Hero";
 
-export default function Home() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+export default function HomePage() {
+  return (
+    <>
+      <Hero />
+    </>
+  );
 }
