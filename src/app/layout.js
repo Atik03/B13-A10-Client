@@ -1,4 +1,5 @@
 import "./globals.css";
+import Providers from "@/providers/AuthProvider";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
@@ -11,9 +12,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <Providers>
+          <Navbar />
+
+          <main>{children}</main>
+
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
