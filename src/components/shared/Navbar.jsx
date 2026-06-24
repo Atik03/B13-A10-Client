@@ -21,11 +21,11 @@ export default function Navbar() {
         <Link href="/browse-books">Browse Books</Link>
       </li>
 
-      {user && (
-        <li>
-          <Link href="/dashboard">Dashboard</Link>
-        </li>
-      )}
+      {/* {user && ( */}
+      <li>
+        <Link href="/dashboard">Dashboard</Link>
+      </li>
+      {/* )} */}
     </>
   );
 

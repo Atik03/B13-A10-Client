@@ -2,11 +2,7 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import DashboardTopbar from "@/components/dashboard/DashboardTopbar";
 
 export default function DashboardLayout({ children }) {
-  const role = "user";
-  // later:
-  // user
-  // librarian
-  // admin
+  const role = "librarian";
 
   return (
     <div className="min-h-screen bg-base-200">

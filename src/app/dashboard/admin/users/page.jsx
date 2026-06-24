@@ -3,7 +3,7 @@ import StatCard from "@/components/dashboard/StatCard";
 export default function UserDashboard() {
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8">Welcome Back</h1>
+      <h1 className="text-3xl font-bold mb-8">Welcome Back 👋</h1>
 
       <div className="grid md:grid-cols-3 gap-6">
         <StatCard title="Books Read" value="24" />
