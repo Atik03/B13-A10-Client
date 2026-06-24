@@ -10,6 +10,7 @@ export default function HomePage() {
       <Hero />
       <FeaturedBooks />
       <PopularCategories />
+      <TopLibrarians />
     </>
   );
 }
