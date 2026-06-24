@@ -12,7 +12,6 @@ export default function HeroSlide({ slide }) {
         backgroundImage: `url(${slide.image.src})`,
       }}
     >
-      {/* Overlay */}
       <div className="hero-overlay bg-black/60"></div>
 
       <div className="hero-content text-center text-neutral-content">
