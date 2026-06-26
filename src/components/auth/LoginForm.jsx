@@ -1,43 +1,141 @@
 "use client";
 
-import { FaGoogle } from "react-icons/fa6";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa6";
+import { toast } from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginForm() {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async (data) => {
+    setLoading(true);
+
+    const { email, password } = data;
+
+    try {
+      const { data: res, error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      toast.success("Login Successful");
+
+      router.push("/");
+    } catch (error) {
+      toast.error(error.message || "Login Failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (error) {
+      toast.error(error.message || "Google Login Failed");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
   return (
-    <div className="card bg-base-100 w-full max-w-md shadow-xl">
+    <div className="card bg-base-100 shadow-xl w-full max-w-md">
       <div className="card-body">
         <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
 
-        <form className="space-y-4 mt-6">
-          <div>
-            <label className="label">Email</label>
+        <p className="text-center text-gray-500">
+          Login to your BookNest account
+        </p>
 
+        <form onSubmit={handleSubmit(handleLogin)} className="space-y-4 mt-6">
+          <input
+            type="email"
+            placeholder="Email Address"
+            className="input input-bordered w-full"
+            {...register("email", {
+              required: "Email is required",
+            })}
+          />
+
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+
+          <div className="relative">
             <input
-              type="email"
-              className="input input-bordered w-full"
-              placeholder="Email"
-            />
-          </div>
-
-          <div>
-            <label className="label">Password</label>
-
-            <input
-              type="password"
-              className="input input-bordered w-full"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
+              className="input input-bordered w-full"
+              {...register("password", {
+                required: "Password is required",
+              })}
             />
+
+            <button
+              type="button"
+              className="absolute right-4 top-4"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
 
-          <button className="btn btn-primary w-full">Login</button>
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary w-full"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
 
         <div className="divider">OR</div>
 
-        <button className="btn w-full">
+        <button
+          onClick={handleGoogleLogin}
+          disabled={googleLoading}
+          className="btn btn-outline w-full"
+        >
           <FaGoogle />
-          Continue with Google
+
+          {googleLoading ? "Please wait..." : "Continue with Google"}
         </button>
+
+        <p className="text-center mt-4">
+          Don't have an account?{" "}
+          <Link href="/register" className="text-primary font-semibold">
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );

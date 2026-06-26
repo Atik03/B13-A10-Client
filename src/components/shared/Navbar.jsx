@@ -1,33 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import {
-  FaBars,
-  FaBookOpen,
-  FaUser,
-  FaArrowRightFromBracket,
-} from "react-icons/fa6";
+import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+
+import { FaBookOpen, FaBars, FaRightFromBracket } from "react-icons/fa6";
 
 export default function Navbar() {
-  const user = null;
+  const pathname = usePathname();
+
+  const { data: session, isPending } = authClient.useSession();
+
+  const user = session?.user;
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+  };
+
+  const navLinkClass = (path) =>
+    pathname === path ? "text-primary font-semibold" : "";
 
   const navLinks = (
     <>
       <li>
-        <Link href="/">Home</Link>
+        <Link href="/" className={navLinkClass("/")}>
+          Home
+        </Link>
       </li>
 
       <li>
-        <Link href="/browse-books">Browse Books</Link>
+        <Link href="/browse-books" className={navLinkClass("/browse-books")}>
+          Browse Books
+        </Link>
       </li>
 
-      {/* {user && ( */}
       <li>
-        <Link href="/dashboard">Dashboard</Link>
+        <Link href="/dashboard" className={navLinkClass("/dashboard")}>
+          Dashboard
+        </Link>
       </li>
       {/* )} */}
     </>
   );
+
+  if (isPending) return null;
 
   return (
     <div className="sticky top-0 z-50 bg-base-100/90 backdrop-blur-md border-b border-base-200">
@@ -48,7 +64,7 @@ export default function Navbar() {
 
           <Link
             href="/"
-            className="flex items-center gap-2 text-2xl font-bold text-primary"
+            className="hidden lg:flex items-center gap-2 text-2xl font-bold text-primary"
           >
             <FaBookOpen />
             <span>BookNest</span>
@@ -56,12 +72,12 @@ export default function Navbar() {
         </div>
 
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-medium gap-2">
+          <ul className="menu menu-horizontal gap-2 px-1 font-medium">
             {navLinks}
           </ul>
         </div>
 
-        <div className="navbar-end gap-2">
+        <div className="navbar-end gap-3">
           {!user ? (
             <>
               <Link href="/login" className="btn btn-ghost">
@@ -73,29 +89,29 @@ export default function Navbar() {
               </Link>
             </>
           ) : (
-            <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full bg-primary text-white flex items-center justify-center">
-                  <FaUser />
-                </div>
-              </label>
-
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow bg-base-100 rounded-box w-56"
+            <>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip={user.name || user.email}
               >
-                <li>
-                  <Link href="/dashboard">Dashboard</Link>
-                </li>
+                <div className="avatar">
+                  <div className="w-11 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img
+                      src={user.image || "https://i.ibb.co/4pDNDk1/avatar.png"}
+                      alt="User"
+                    />
+                  </div>
+                </div>
+              </div>
 
-                <li>
-                  <button>
-                    <FaArrowRightFromBracket />
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
+              <button
+                onClick={handleLogout}
+                className="btn btn-error text-white"
+              >
+                <FaRightFromBracket />
+                Logout
+              </button>
+            </>
           )}
         </div>
       </div>
