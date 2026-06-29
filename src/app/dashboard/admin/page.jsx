@@ -1,19 +1,12 @@
-import StatCard from "@/components/dashboard/StatCard";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import RoleRoute from "@/components/auth/RoleRoute";
 
 export default function AdminDashboard() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
-
-      <div className="grid md:grid-cols-4 gap-6">
-        <StatCard title="Users" value="340" />
-
-        <StatCard title="Books" value="950" />
-
-        <StatCard title="Deliveries" value="410" />
-
-        <StatCard title="Revenue" value="$1500" />
-      </div>
-    </div>
+    <ProtectedRoute>
+      <RoleRoute allowedRoles={["admin"]}>
+        <h1>Admin Dashboard</h1>
+      </RoleRoute>
+    </ProtectedRoute>
   );
 }

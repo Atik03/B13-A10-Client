@@ -24,10 +24,11 @@ export default function LoginForm() {
   const handleLogin = async (data) => {
     setLoading(true);
 
-    const { email, password } = data;
+    const email = data.email.trim();
+    const password = data.password;
 
     try {
-      const { data: res, error } = await authClient.signIn.email({
+      const { error } = await authClient.signIn.email({
         email,
         password,
         callbackURL: "/",
@@ -38,9 +39,22 @@ export default function LoginForm() {
         return;
       }
 
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${email}`,
+      );
+
+      const user = await response.json();
+
       toast.success("Login Successful");
 
-      router.push("/");
+      // Role Based Redirect
+      if (user.role === "admin") {
+        router.push("/dashboard/admin");
+      } else if (user.role === "librarian") {
+        router.push("/dashboard/librarian");
+      } else {
+        router.push("/dashboard/user");
+      }
     } catch (error) {
       toast.error(error.message || "Login Failed");
     } finally {
@@ -58,7 +72,6 @@ export default function LoginForm() {
       });
     } catch (error) {
       toast.error(error.message || "Google Login Failed");
-    } finally {
       setGoogleLoading(false);
     }
   };
@@ -98,8 +111,8 @@ export default function LoginForm() {
 
             <button
               type="button"
-              className="absolute right-4 top-4"
               onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-4"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>

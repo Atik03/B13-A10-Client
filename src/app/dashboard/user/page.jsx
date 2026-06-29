@@ -1,17 +1,12 @@
-import StatCard from "@/components/dashboard/StatCard";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import RoleRoute from "@/components/auth/RoleRoute";
 
 export default function UserDashboard() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Welcome Back</h1>
-
-      <div className="grid md:grid-cols-3 gap-6">
-        <StatCard title="Books Read" value="24" />
-
-        <StatCard title="Pending Deliveries" value="2" />
-
-        <StatCard title="Fees Spent" value="$45" />
-      </div>
-    </div>
+    <ProtectedRoute>
+      <RoleRoute allowedRoles={["user"]}>
+        <h1>User Dashboard</h1>
+      </RoleRoute>
+    </ProtectedRoute>
   );
 }

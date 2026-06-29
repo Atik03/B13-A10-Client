@@ -52,13 +52,16 @@ export default function RegisterForm() {
         createdAt: new Date(),
       };
 
-      const response = await fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
         },
-        body: JSON.stringify(userInfo),
-      });
+      );
 
       const result = await response.json();
 
