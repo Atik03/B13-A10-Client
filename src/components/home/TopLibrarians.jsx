@@ -1,7 +1,42 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { CiCircleCheck } from "react-icons/ci";
 
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+
 export default function TopLibrarians() {
-  const librarians = [1, 2, 3];
+  const [librarians, setLibrarians] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTopLibrarians();
+  }, []);
+
+  const fetchTopLibrarians = async () => {
+    try {
+      const res = await fetch(`${SERVER_URL}/top-librarians`);
+
+      const data = await res.json();
+
+      setLibrarians(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="max-w-7xl mx-auto px-4 py-20">
+        <div className="text-center">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-20">
@@ -14,23 +49,40 @@ export default function TopLibrarians() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-8">
-        {librarians.map((item) => (
-          <div key={item} className="card bg-base-100 shadow-md">
+        {librarians.map((librarian) => (
+          <div
+            key={librarian.email}
+            className="card bg-base-100 shadow-md hover:shadow-xl duration-300"
+          >
             <div className="card-body items-center text-center">
               <div className="avatar">
-                <div className="w-24 rounded-full bg-base-200"></div>
+                <div className="w-24 rounded-full overflow-hidden ring ring-primary ring-offset-base-100 ring-offset-2">
+                  <Image
+                    src={librarian.image}
+                    alt={librarian.name}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
 
-              <h3 className="text-xl font-semibold">Librarian Name</h3>
+              <h3 className="text-xl font-semibold mt-4">{librarian.name}</h3>
 
-              <div className="badge badge-primary gap-2">
+              <div className="badge badge-primary gap-2 mt-3">
                 <CiCircleCheck />
-                120 Deliveries
+                {librarian.totalBooks} Books Added
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {!loading && librarians.length === 0 && (
+        <div className="text-center mt-10">
+          <p className="text-gray-500">No librarians found.</p>
+        </div>
+      )}
     </section>
   );
 }

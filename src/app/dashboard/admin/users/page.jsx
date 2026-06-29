@@ -9,7 +9,9 @@ export default function ManageUsersPage() {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const fetchUsers = async () => {
     try {
@@ -32,15 +34,17 @@ export default function ManageUsersPage() {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
+  const handleSearch = () => {
+    setSearch(inputValue);
+
     const result = users.filter(
       (user) =>
-        user.name?.toLowerCase().includes(search.toLowerCase()) ||
-        user.email?.toLowerCase().includes(search.toLowerCase()),
+        user.name?.toLowerCase().includes(inputValue.toLowerCase()) ||
+        user.email?.toLowerCase().includes(inputValue.toLowerCase()),
     );
 
     setFilteredUsers(result);
-  }, [search, users]);
+  };
 
   const handleRoleChange = async (id, role) => {
     try {
@@ -102,16 +106,27 @@ export default function ManageUsersPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col  md:flex-row justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Manage Users</h1>
 
-        <input
-          type="text"
-          placeholder="Search User..."
-          className="input input-bordered w-72"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <input
+            type="text"
+            placeholder="Search User..."
+            className="input input-bordered w-60"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
+          />
+
+          <button className="btn btn-primary" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
       </div>
 
       <div className="overflow-x-auto bg-base-100 rounded-xl shadow">
@@ -169,6 +184,14 @@ export default function ManageUsersPage() {
                 </td>
               </tr>
             ))}
+
+            {filteredUsers.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center py-8">
+                  No users found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

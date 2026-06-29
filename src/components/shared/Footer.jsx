@@ -5,23 +5,27 @@ export default function Footer() {
   return (
     <footer className="bg-base-200 mt-20">
       <div className="max-w-7xl mx-auto px-6 py-14">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-center md:text-left">
+          {/* Logo */}
           <div>
             <Link
               href="/"
-              className="flex items-center gap-2 text-2xl font-bold text-primary"
+              className="flex items-center justify-center md:justify-start gap-2 text-2xl font-bold text-primary"
             >
               <FaBookOpen />
               <span>BookNest</span>
             </Link>
 
-            <p className="mt-4 text-sm opacity-70">
+            <p className="mt-4 text-sm opacity-70 max-w-xs mx-auto md:mx-0">
               Your Local Library, Delivered.
             </p>
           </div>
 
+          {/* Quick Links */}
           <div>
-            <h3 className="footer-title">Quick Links</h3>
+            <h3 className="footer-title justify-center md:justify-start">
+              Quick Links
+            </h3>
 
             <Link href="/" className="link link-hover block">
               Home
@@ -40,22 +44,28 @@ export default function Footer() {
             </Link>
           </div>
 
+          {/* Policies */}
           <div>
-            <h3 className="footer-title">Policies</h3>
+            <h3 className="footer-title justify-center md:justify-start">
+              Policies
+            </h3>
 
             <a className="link link-hover block">Privacy Policy</a>
 
             <a className="link link-hover block">Terms & Conditions</a>
           </div>
 
+          {/* Newsletter */}
           <div>
-            <h3 className="footer-title">Newsletter</h3>
+            <h3 className="footer-title justify-center md:justify-start">
+              Newsletter
+            </h3>
 
             <p className="text-sm mb-4">Subscribe for updates.</p>
 
-            <div className="join w-full">
+            <div className="join w-full max-w-sm mx-auto md:mx-0">
               <input
-                type="text"
+                type="email"
                 placeholder="Email"
                 className="input input-bordered join-item w-full"
               />
@@ -63,7 +73,7 @@ export default function Footer() {
               <button className="btn btn-primary join-item">Join</button>
             </div>
 
-            <div className="flex gap-4 mt-5 text-xl">
+            <div className="flex justify-center md:justify-start gap-4 mt-5 text-xl">
               <a className="hover:text-primary cursor-pointer">
                 <FaFacebook />
               </a>

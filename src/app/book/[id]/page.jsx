@@ -60,7 +60,7 @@ export default function BookDetailsPage() {
     <section className="max-w-7xl mx-auto px-4 py-12">
       <BookInfo book={book} />
 
-      <ReviewSection />
+      <ReviewSection book={book._id} />
     </section>
   );
 }
