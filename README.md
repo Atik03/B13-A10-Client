@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📚 BookNest
 
-## Getting Started
+## Project Name
 
-First, run the development server:
+**BookNest – Online Library Management System**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Description
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+BookNest is a modern, full-stack online library management web application built with Next.js that provides a secure and user-friendly platform for discovering, borrowing, and managing books digitally. The application enables users to browse books by category, search for specific titles, view detailed book information, and buy books with a smooth and intuitive workflow.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The platform also features role-based functionality for librarians, allowing them to add, update, and manage book collections efficiently. Users can monitor their borrowed books, while librarians can track book availability and manage inventory. Built with Next.js for high performance, server-side rendering, and SEO optimization, BookNest delivers a responsive experience across desktop, tablet, and mobile devices.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application integrates secure authentication, protected routes, image uploads, real-time book availability management, and a modern UI to create a complete digital library solution.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Next.js
+* React.js
+* Tailwind CSS
+* DaisyUI
+* JavaScript (ES6+)
+* MongoDB
+* Better Auth
+* React Icons
+* React Hook Form
+* React Hot Toast / React Toastify
+* ImgBB API
+* SwiperJS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ✨ Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Built with Next.js for fast, SEO-friendly performance
+* Browse all available books in one place
+* Advanced search and category-based filtering
+* Detailed book information page
+* Secure user registration and login system
+* Protected routes for authenticated users
+* Buy books with availability checking
+* Return borrowed books with automatic stock update
+* User dashboard to manage borrowed books
+* Librarian dashboard for book management
+* Add new books with image upload support
+* Update and delete book information
+* View Top Librarians based on uploaded books
+* Book availability status management
+* Responsive design for mobile, tablet, and desktop
+* Modern and clean user interface
+* Toast notifications for user actions
+* MongoDB database integration
+* Secure API communication
